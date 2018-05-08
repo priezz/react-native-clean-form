@@ -11,12 +11,13 @@ export default class Switch extends React.PureComponent {
     static propTypes = BaseSwitch.propTypes
 
     render() {
+        const {value} = this.props
         const {Switch: switchTheme = {}} = this.props.theme
         return <BaseSwitch
             {...this.props}
-            onTintColor={switchTheme.onTintColor}
-            thumbTintColor={switchTheme.thumbTintColor}
-            tintColor={switchTheme.tintColor}
+            onTintColor={switchTheme.activeBackgroundColor}
+            thumbTintColor={value ? switchTheme.activeColor : switchTheme.inactiveColor}
+            tintColor={switchTheme.inactiveBackgroundColor}
         />
     }
 }
