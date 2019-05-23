@@ -3,7 +3,7 @@ const Theme = {
     backgroundColor: '#4286dd',
     color: '#fff',
     fontSize: 12,
-    fontWeight: 700,
+    fontWeight: '700',
     height: 45
   },
   ErrorMessage: {
@@ -17,7 +17,7 @@ const Theme = {
     borderBottomColor: '#ddd',
     labelColor: '#909090',
     labelSize: 9,
-    labelWeight: 700,
+    labelWeight: '700',
     labelHeight: 25,
     paddingTop: 12,
     paddingBottom: 12,
