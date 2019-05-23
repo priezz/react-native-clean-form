@@ -1,8 +1,8 @@
 import React from 'react'
-import styled from 'styled-components/native'
+import { View } from 'react-native'
 
-const FieldsContainer = styled.View`
-  flex:1;
-`
+const FieldsContainer = ({ children }) => <View style={{ flex: 1 }}>
+  {children}
+</View>
 
 export default FieldsContainer

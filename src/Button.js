@@ -7,39 +7,37 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-import styled from 'styled-components/native'
-import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 import defaultTheme from './Theme'
 
-const ButtonWrapper = styled.View`
-  flex:1;
-  align-self: stretch;
-  flex-direction: column;
-  justify-content: center;
-`
+const ButtonWrapper = ({ children }) => <View style={{
+  flex: 1,
+  alignSelf: 'stretch',
+  flexDirection: 'column',
+  justifyContent: 'center',
+}}>{children}</View>
 
-const ButtonStyle = styled.View`
-  backgroundColor: ${props => props.theme.Button.backgroundColor};
-  height: ${props => props.theme.Button.height};
-`
+const ButtonStyle = ({ children, theme }) => <View style={{
+  backgroundColor: theme.Button.backgroundColor,
+  height: theme.Button.height,
+}}>{children}</View>
 
 ButtonStyle.defaultProps = {
   theme: defaultTheme
 }
 
-const ButtonTextWrapper = styled.View`
-  flex:1;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`
+const ButtonTextWrapper = ({ children }) => <View style={{
+  flex: 1,
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+}}>{children}</View>
 
-const ButtonText = styled.Text`
-  color: ${props => props.theme.Button.color};
-  font-size: ${props => props.theme.Button.fontSize};
-  font-weight: ${props => props.theme.Button.fontWeight};
-`
+const ButtonText = ({ children, theme }) => <Text style={{
+  color: theme.Button.color,
+  fontSize: theme.Button.fontSize,
+  fontWeight: theme.Button.fontWeight,
+}}>{children}</Text>
 
 ButtonText.defaultProps = {
   theme: defaultTheme,
@@ -47,7 +45,7 @@ ButtonText.defaultProps = {
 }
 
 const Button = props => {
-  const { children : label, icon, iconPlacement, submitting, theme, ...rest } = props
+  const { children: label, icon, iconPlacement, submitting, theme, ...rest } = props
 
   const Touchable = Platform.OS === 'android'
     ? TouchableNativeFeedback
@@ -86,7 +84,7 @@ const Button = props => {
           <ButtonTextWrapper>
             {iconPlacement === 'left' && IconWrapped}
             <ButtonText theme={theme}>
-              { children }
+              {children}
             </ButtonText>
             {iconPlacement === 'right' && IconWrapped}
           </ButtonTextWrapper>
@@ -96,12 +94,12 @@ const Button = props => {
   )
 }
 
-Button.propTypes = {
-  children: PropTypes.string.isRequired,
-  icon: PropTypes.string,
-  iconPlacement: PropTypes.oneOf(['left', 'right']),
-  submitting: PropTypes.bool
-}
+// Button.propTypes = {
+//   children: PropTypes.string.isRequired,
+//   icon: PropTypes.string,
+//   iconPlacement: PropTypes.oneOf(['left', 'right']),
+//   submitting: PropTypes.bool
+// }
 
 Button.defaultProps = {
   icon: false,

@@ -1,31 +1,29 @@
 import React from 'react'
-import { View } from 'react-native'
-import PropTypes from 'prop-types'
+import { View, Text } from 'react-native'
 import { FormGroup, Label } from '../../index'
-import styled from 'styled-components/native'
 import defaultTheme from '../Theme'
 
-const ErrorMessage = styled.Text`
-  color: ${props => props.theme.ErrorMessage.color};
-  fontSize: ${props => props.theme.ErrorMessage.fontSize};
-  marginBottom: ${props => props.theme.ErrorMessage.marginBottom};
-  textAlign: ${props => props.theme.ErrorMessage.textAlign};
-`
+const ErrorMessage = ({ children, theme }) => <Text style={{
+  color: theme.ErrorMessage.color,
+  fontSize: theme.ErrorMessage.fontSize,
+  marginBottom: theme.ErrorMessage.marginBottom,
+  textAlign: theme.ErrorMessage.textAlign,
+}}>{children}</Text>
 
 ErrorMessage.defaultProps = {
   theme: defaultTheme
 }
 
 const render = renderComponent => props => {
-  const { border, input : { onChange, ...restInput }, label, inlineLabel, theme, meta: { touched, error } } = props
+  const { border, input: { onChange, ...restInput }, label, inlineLabel, theme, meta: { touched, error } } = props
 
   return (
     <View>
       <FormGroup border={border} inlineLabel={inlineLabel} theme={theme} error={touched && !!error} {...props} >
-        <Label theme={theme}>{ label }</Label>
-        { renderComponent(props) }
+        <Label theme={theme}>{label}</Label>
+        {renderComponent(props)}
       </FormGroup>
-      { touched && error && <ErrorMessage theme={theme}>{ error }</ErrorMessage> }
+      {touched && error && <ErrorMessage theme={theme}>{error}</ErrorMessage>}
     </View>
   )
 }
@@ -42,12 +40,12 @@ const createInputCreator = ReduxFormFieldComponent => (name, renderFunction, Pro
   }
 
   FieldWrapper.displayName = 'FieldWrapper'
-  FieldWrapper.propTypes = Object.assign({
-    border: PropTypes.bool,
-    inlineLabel: PropTypes.bool,
-    label: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }, PropTypesOverrides)
+  // FieldWrapper.propTypes = Object.assign({
+  //   border: PropTypes.bool,
+  //   inlineLabel: PropTypes.bool,
+  //   label: PropTypes.string.isRequired,
+  //   name: PropTypes.string.isRequired
+  // }, PropTypesOverrides)
   FieldWrapper.defaultProps = Object.assign({
     border: FormGroup.defaultProps.border,
     inlineLabel: FormGroup.defaultProps.inlineLabel

@@ -1,11 +1,10 @@
 import React from 'react'
 import { View } from 'react-native'
-import styled from 'styled-components/native'
 import defaultTheme from './Theme'
 
-const ButtonGroup = styled.View`
-  height: ${props => props.theme.Button.height};
-`
+const ButtonGroup = ({ children, theme }) => <View style={{
+  height: theme.Button.height,
+}}>{children}</View>
 
 ButtonGroup.defaultProps = {
   theme: defaultTheme,

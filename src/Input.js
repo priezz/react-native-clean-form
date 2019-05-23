@@ -1,7 +1,5 @@
 import React from 'react'
-import {TextInput, View} from 'react-native'
-import PropTypes from 'prop-types'
-import styled from 'styled-components/native'
+import { TextInput, View } from 'react-native'
 import defaultTheme from './Theme'
 
 /**
@@ -9,20 +7,14 @@ import defaultTheme from './Theme'
  * properties.
  *
  * @param {Object} props
- * @returns {string}
+ * @returns {number}
  */
-const calculateFlexValue = (props) => {
+const calculateFlexValue = ({ inlineLabel, multiline, numberOfLines }) => {
   let flex = 1
+  if (multiline && numberOfLines > 0) flex = numberOfLines + 1
+  if (inlineLabel) flex = 0.5
 
-  if (props.multiline && props.numberOfLines > 0) {
-    flex = props.numberOfLines + 1
-  }
-
-  if (props.inlineLabel) {
-    flex = 0.5
-  }
-
-  return (flex)
+  return flex
 }
 
 /**
@@ -32,34 +24,31 @@ const calculateFlexValue = (props) => {
  * @param {Object} props
  * @returns {string}
  */
-const determineTextOrientation = (props) => {
+const determineTextOrientation = ({ multiline, numberOfLines }) => {
   let orientation = 'center'
-
-  if (props.multiline && props.numberOfLines > 1) {
-    orientation = 'top'
-  }
+  if (multiline && numberOfLines > 1) orientation = 'top'
 
   return (orientation)
 }
 
 // When doing stacked labels we want the input to be greedy
-const InputWrapper = styled.View`
-  flex: ${props => calculateFlexValue(props)};
-  justify-content: center;
-`
+const InputWrapper = ({ children, inlineLabel, multiline, numberOfLines, }) => <View style={{
+  flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
+  justifyContent: 'center',
+}}>{children}</View>
 
 InputWrapper.defaultProps = {
   theme: defaultTheme
 }
 
 // Subtract the border of the form group to have a full height input
-const StyledInput = styled.TextInput`
-  flex: ${props => props.inlineLabel ? .5 : 1};
-  color: ${props => props.theme.Input.color};
-  font-size: ${props => props.theme.BaseInput.fontSize};
-  line-height: ${props => props.theme.BaseInput.lineHeight};
-  text-align-vertical: ${props => determineTextOrientation(props)};
-`
+const StyledInput = ({ children, inlineLabel, multiline, numberOfLines, placeholderTextColor, theme }) => <TextInput style={{
+  flex: inlineLabel ? .5 : 1,
+  color: theme.Input.color,
+  fontSize: theme.BaseInput.fontSize,
+  lineHeight: theme.BaseInput.lineHeight,
+  textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
+}}>{children}</TextInput>
 
 StyledInput.defaultProps = {
   theme: defaultTheme
@@ -75,16 +64,16 @@ class Input extends React.Component {
         <StyledInput
           inlineLabel={this.props.inlineLabel}
           placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
-          {...this.props}/>
+          {...this.props} />
       </InputWrapper>
     )
   }
 }
 
-Input.propTypes = {
-  ...TextInput.propTypes,
-  inlineLabel: PropTypes.bool.isRequired
-}
+// Input.propTypes = {
+//   ...TextInput.propTypes,
+//   inlineLabel: PropTypes.bool.isRequired
+// }
 
 Input.defaultProps = {
   componentName: 'Input',

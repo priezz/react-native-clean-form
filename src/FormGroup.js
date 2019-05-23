@@ -1,8 +1,6 @@
 import React from 'react'
-import { View, TextInput } from 'react-native'
-import PropTypes from 'prop-types'
-import styled from 'styled-components/native'
-import _ from 'lodash'
+import { View } from 'react-native'
+import pick from 'lodash/pick'
 import defaultTheme from './Theme'
 
 /**
@@ -10,37 +8,33 @@ import defaultTheme from './Theme'
  * The inline label and multiline properties affect the height.
  *
  * @param {Object} props
- * @returns {int}
+ * @returns {number}
  */
-const calculateHeight = (props) => {
-  let height = props.theme.FormGroup.height
+const calculateHeight = ({ inlineLabel, multiline, numberOfLines, theme }) => {
+  let height = theme.FormGroup.height
+  if (multiline) height = theme.FormGroup.height * numberOfLines
+  if (!inlineLabel) height += theme.Label.stackedHeight
 
-  if (props.multiline) {
-    height = props.theme.FormGroup.height * props.numberOfLines
-  }
-
-  if (!props.inlineLabel) {
-    height += props.theme.Label.stackedHeight
-  }
-
-  return (height)
+  return height
 }
 
-const FormGroupWrapper = styled.View`
-  align-items: ${props => props.inlineLabel ? 'center' : 'stretch' };
-  border-color: ${props => props.error ? props.theme.FormGroup.errorBorderColor : props.theme.FormGroup.borderColor};
-  border-radius: ${props => props.theme.FormGroup.borderRadius};
-  border-style: ${props => props.theme.FormGroup.borderStyle};
-  border-width: ${props => props.border ? props.theme.FormGroup.borderWidth : 0};
-  flex-direction: ${props => props.inlineLabel ? 'row' : 'column' };
-  justify-content: flex-start;
-  height: ${props => calculateHeight(props)};
-  marginBottom: ${props => props.theme.FormGroup.marginBottom};
-  paddingTop : ${props => props.theme.FormGroup.paddingTop };
-  paddingRight : ${props => props.theme.FormGroup.paddingRight };
-  paddingBottom : ${props => props.theme.FormGroup.paddingBottom };
-  paddingLeft : ${props => props.theme.FormGroup.paddingLeft };
-`
+const FormGroupWrapper = ({
+  border, children, error, inlineLabel, multiline, numberOfLines, theme,
+}) => <View style={{
+  alignItems: inlineLabel ? 'center' : 'stretch',
+  borderColor: error ? theme.FormGroup.errorBorderColor : theme.FormGroup.borderColor,
+  borderRadius: theme.FormGroup.borderRadius,
+  borderStyle: theme.FormGroup.borderStyle,
+  borderWidth: border ? theme.FormGroup.borderWidth : 0,
+  flexDirection: inlineLabel ? 'row' : 'column',
+  justifyContent: 'flex-start',
+  height: calculateHeight({ inlineLabel, multiline, numberOfLines, theme }),
+  marginBottom: theme.FormGroup.marginBottom,
+  paddingTop: theme.FormGroup.paddingTop,
+  paddingRight: theme.FormGroup.paddingRight,
+  paddingBottom: theme.FormGroup.paddingBottom,
+  paddingLeft: theme.FormGroup.paddingLeft,
+}}>{children}</View>
 
 FormGroupWrapper.defaultProps = {
   theme: defaultTheme,
@@ -51,9 +45,9 @@ const FormGroup = props => {
   const { border, error, inlineLabel, theme, multiline, numberOfLines, keyboardType, returnKeyType } = props
   const children = React.Children.map(props.children, child => {
     let subsetOfProps = {}
-    if (child.props.componentName === 'Input') {
+    if (child.componentName === 'Input') {
       const inputPropTypes = Object.keys(child.type.propTypes)
-      subsetOfProps = _.pick(props, inputPropTypes);
+      subsetOfProps = pick(props, inputPropTypes);
     }
 
     return React.cloneElement(child, Object.assign({}, child.props, {
@@ -64,15 +58,15 @@ const FormGroup = props => {
   return (
     <FormGroupWrapper border={border} error={error} inlineLabel={inlineLabel}
       multiline={multiline} numberOfLines={numberOfLines} theme={theme}>
-      { children }
+      {children}
     </FormGroupWrapper>
   )
 }
 
-FormGroup.propTypes = {
-  border: PropTypes.bool,
-  error: PropTypes.bool,
-}
+// FormGroup.propTypes = {
+//   border: PropTypes.bool,
+//   error: PropTypes.bool,
+// }
 
 FormGroup.defaultProps = {
   componentName: 'FormGroup',

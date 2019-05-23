@@ -1,6 +1,5 @@
 import React from 'react'
-import {Text, View, Platform} from 'react-native'
-import PropTypes from 'prop-types'
+import { Text, View, Platform } from 'react-native'
 import defaultTheme from './Theme'
 
 
@@ -10,7 +9,7 @@ const NON_VIEW_PROPS = ['color', 'fontFamily', 'fontSize', 'fontStyle', 'fontVar
 
 class LabelWrapper extends React.PureComponent {
   render() {
-    const {children, inlineLabel, theme} = this.props
+    const { children, inlineLabel, theme } = this.props
     const style = {
       flex: inlineLabel ? 0.5 : 1,
       flexDirection: inlineLabel ? 'row' : 'column',
@@ -31,7 +30,7 @@ class LabelText extends React.PureComponent {
   }
 
   render() {
-    const {children, theme} = this.props
+    const { children, theme } = this.props
     const style = {
       ...theme.Label,
       ...theme.LabelText,
@@ -42,12 +41,12 @@ class LabelText extends React.PureComponent {
 }
 
 export default class Label extends React.PureComponent {
-  static propTypes = {
-    children: PropTypes.string.isRequired
-  }
+  // static propTypes = {
+  //   children: PropTypes.string.isRequired
+  // }
 
   render() {
-    const {children, inlineLabel, theme} = this.props
+    const { children, inlineLabel, theme } = this.props
     return <LabelWrapper inlineLabel={inlineLabel} theme={theme}>
       <LabelText inlineLabel={inlineLabel} theme={theme}>{children}</LabelText>
     </LabelWrapper>

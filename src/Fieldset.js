@@ -1,57 +1,55 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import PropTypes from 'prop-types'
-import styled from 'styled-components/native'
 import defaultTheme from './Theme'
 
-const FieldsetLabelText = styled.Text`
-  color: ${props => props.theme.Fieldset.labelColor };
-  fontSize: ${props => props.theme.Fieldset.labelSize };
-  fontWeight: ${props => props.theme.Fieldset.labelWeight };
-  height: ${props => props.theme.Fieldset.labelHeight };
-`
+const FieldsetLabelText = ({ children, theme }) => <Text style={{
+  color: theme.Fieldset.labelColor,
+  fontSize: theme.Fieldset.labelSize,
+  fontWeight: theme.Fieldset.labelWeight,
+  height: theme.Fieldset.labelHeight,
+}}>{children}</Text>
 
 FieldsetLabelText.defaultProps = {
   theme: defaultTheme
 }
 
-const FieldsetLabel = props => <View><FieldsetLabelText>{ props.children }</FieldsetLabelText></View>
+const FieldsetLabel = ({ children }) => <View><FieldsetLabelText>
+  {children}
+</FieldsetLabelText></View>
 
-const FieldsetWrapper = styled.View`
-  borderBottomColor: ${props => props.theme.Fieldset.borderBottomColor };
-  borderBottomWidth: ${props => props.last ? 0 : props.theme.Fieldset.borderBottomWidth };
-  paddingTop : ${props => props.theme.Fieldset.paddingTop };
-  paddingRight : ${props => props.theme.Fieldset.paddingRight };
-  paddingBottom : ${props => props.theme.Fieldset.paddingBottom };
-  paddingLeft : ${props => props.theme.Fieldset.paddingLeft };
-`
+const FieldsetWrapper = ({ children, last, theme }) => <View style={{
+  borderBottomColor: theme.Fieldset.borderBottomColor,
+  borderBottomWidth: last ? 0 : theme.Fieldset.borderBottomWidth,
+  paddingTop: theme.Fieldset.paddingTop,
+  paddingRight: theme.Fieldset.paddingRight,
+  paddingBottom: theme.Fieldset.paddingBottom,
+  paddingLeft: theme.Fieldset.paddingLeft,
+}}>{children}</View>
 
 FieldsetWrapper.defaultProps = {
   theme: defaultTheme
 }
 
-const FieldsetFormWrapper = styled.View`
-
-`
+const FieldsetFormWrapper = ({ children }) => <View>{children}</View>
 
 const Fieldset = props => {
   const { children, label, last, theme } = props
 
   return (
     <FieldsetWrapper last={last} theme={theme}>
-      { /* text-transform is for some reason not supported in react native https://github.com/facebook/react-native/issues/2088 */ }
-      { label && <FieldsetLabel>{ label.toUpperCase() }</FieldsetLabel> }
+      { /* text-transform is for some reason not supported in react native https://github.com/facebook/react-native/issues/2088 */}
+      {label && <FieldsetLabel>{label.toUpperCase()}</FieldsetLabel>}
       <FieldsetFormWrapper>
-        { children }
+        {children}
       </FieldsetFormWrapper>
     </FieldsetWrapper>
   )
 }
 
-Fieldset.propTypes = {
-  last: PropTypes.bool,
-  label: PropTypes.string
-}
+// Fieldset.propTypes = {
+//   last: PropTypes.bool,
+//   label: PropTypes.string
+// }
 
 Fieldset.defaultProps = {
   componentName: 'Fieldset',
