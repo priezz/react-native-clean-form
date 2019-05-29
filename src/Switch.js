@@ -15,7 +15,7 @@ export default class Switch extends React.PureComponent {
     const { Switch: switchTheme = {} } = this.props.theme
     return <BaseSwitch
       {...this.props}
-      thumbTintColor={value ? switchTheme.activeColor : switchTheme.inactiveColor}
+      thumbColor={value ? switchTheme.activeColor : switchTheme.inactiveColor}
       trackColor={{
         false: switchTheme.inactiveBackgroundColor,
         true: switchTheme.activeBackgroundColor,
