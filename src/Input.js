@@ -35,6 +35,7 @@ class Input extends React.Component {
     console.log('[Input/render]', this.props)
     return <TextInput
       allowFontScaling
+      multiline={numberOfLines > 1}
       numberOfLines={numberOfLines}
       placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
       style={{
