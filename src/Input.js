@@ -34,7 +34,7 @@ const determineTextOrientation = ({ multiline, numberOfLines }) => {
 class Input extends React.Component {
   render() {
     const { inlineLabel, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
-console.log('[Input/render]', this.props)
+    console.log('[Input/render]', this.props)
     return (
       <View
         style={{
@@ -43,6 +43,7 @@ console.log('[Input/render]', this.props)
           // height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
           // height: 40,
           justifyContent: 'center',
+          padding: 0,
         }}
       >
         <TextInput
