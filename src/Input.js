@@ -34,14 +34,14 @@ const determineTextOrientation = ({ multiline, numberOfLines }) => {
 class Input extends React.Component {
   render() {
     const { inlineLabel, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
-
+console.log('[Input/render]', this.props)
     return (
       <View
         style={{
           backgroundColor: 'green',
           flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
           // height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
-          height: 40,
+          // height: 40,
           justifyContent: 'center',
         }}
       >
@@ -53,6 +53,7 @@ class Input extends React.Component {
             color: theme.Input.color,
             flex: inlineLabel ? .5 : 1,
             fontSize: theme.BaseInput.fontSize,
+            height: 40,
             lineHeight: theme.BaseInput.lineHeight,
             textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
           }}
