@@ -36,31 +36,33 @@ class Input extends React.Component {
     const { inlineLabel, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
     console.log('[Input/render]', this.props)
     return (
-      <View
+      // <View
+      //   style={{
+      //     backgroundColor: 'green',
+      //     flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
+      //     // height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+      //     // height: 40,
+      //     justifyContent: 'center',
+      //     padding: 0,
+      //   }}
+      // >
+      <TextInput
+        allowFontScaling
+        numberOfLines={numberOfLines}
+        placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
         style={{
-          backgroundColor: 'green',
+          color: theme.Input.color,
+          // flex: inlineLabel ? .5 : 1,
           flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
-          // height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+          fontSize: theme.BaseInput.fontSize,
           // height: 40,
-          justifyContent: 'center',
-          padding: 0,
+          height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+          lineHeight: theme.BaseInput.lineHeight,
+          textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
         }}
-      >
-        <TextInput
-          allowFontScaling
-          numberOfLines={numberOfLines}
-          placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
-          style={{
-            color: theme.Input.color,
-            flex: inlineLabel ? .5 : 1,
-            fontSize: theme.BaseInput.fontSize,
-            height: 40,
-            lineHeight: theme.BaseInput.lineHeight,
-            textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
-          }}
-          {...rest}
-        />
-      </View>
+        {...rest}
+      />
+      // </View>
     )
   }
 }
