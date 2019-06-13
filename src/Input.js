@@ -29,7 +29,7 @@ const determineTextAlignment = ({ multiline, numberOfLines }) => multiline && nu
 class Input extends React.Component {
   render() {
     const { inlineLabel = true, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
-    console.log('[Input/render]', this.props)
+
     return <View
       style={{
         borderBottomWidth: 1,
@@ -47,7 +47,7 @@ class Input extends React.Component {
         placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
         style={{
           // flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
-          height: (theme.Input.lineHeight || theme.BaseInput.lineHeight) * (Platform.OS == 'android' ? 2.2 : 1.1),
+          height: (theme.Input.lineHeight || theme.BaseInput.lineHeight) * (Platform.OS == 'android' ? 2 : 1),
           textAlignVertical: determineTextAlignment({ multiline, numberOfLines }),
           ...theme.BaseInput,
           ...theme.Input,

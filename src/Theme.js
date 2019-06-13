@@ -44,7 +44,7 @@ const Theme = {
   },
   Input: {
     color: '#313131',
-    paddingBottom: 0,
+    paddingBottom: 3,
     paddingLeft: 6,
   },
   Label: {
