@@ -38,8 +38,10 @@ class Input extends React.Component {
     return (
       <View
         style={{
+          backgroundColor: 'green',
           flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
-          height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+          // height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+          height: 40,
           justifyContent: 'center',
         }}
       >
