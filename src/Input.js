@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, View } from 'react-native'
+import { Platform, TextInput, View } from 'react-native'
 import defaultTheme from './Theme'
 
 /**
@@ -49,17 +49,22 @@ class Input extends React.Component {
       <InputWrapper
         inlineLabel={inlineLabel}
         multiline={multiline}
-        numberOfLines={numberOfLines}>
+        numberOfLines={numberOfLines}
+      >
         <TextInput
+          allowFontScaling
+          numberOfLines={numberOfLines}
           placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
           style={{
-            flex: inlineLabel ? .5 : 1,
             color: theme.Input.color,
+            flex: inlineLabel ? .5 : 1,
             fontSize: theme.BaseInput.fontSize,
+            height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
             lineHeight: theme.BaseInput.lineHeight,
             textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
           }}
-          {...rest} />
+          {...rest}
+        />
       </InputWrapper>
     )
   }
