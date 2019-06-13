@@ -52,6 +52,7 @@ class Input extends React.Component {
           ...theme.BaseInput,
           ...theme.Input,
         }}
+        underlineColorAndroid="transparent"
         {...rest}
       />
     </View>
