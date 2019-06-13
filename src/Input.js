@@ -41,30 +41,25 @@ InputWrapper.defaultProps = {
   theme: defaultTheme
 }
 
-// Subtract the border of the form group to have a full height input
-const StyledInput = ({ children, inlineLabel, multiline, numberOfLines, placeholderTextColor, theme }) => <TextInput style={{
-  flex: inlineLabel ? .5 : 1,
-  color: theme.Input.color,
-  fontSize: theme.BaseInput.fontSize,
-  lineHeight: theme.BaseInput.lineHeight,
-  textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
-}}>{children}</TextInput>
-
-StyledInput.defaultProps = {
-  theme: defaultTheme
-}
-
 class Input extends React.Component {
   render() {
+    const { inlineLabel, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
+
     return (
       <InputWrapper
-        inlineLabel={this.props.inlineLabel}
-        multiline={this.props.multiline}
-        numberOfLines={this.props.numberOfLines}>
-        <StyledInput
-          inlineLabel={this.props.inlineLabel}
+        inlineLabel={inlineLabel}
+        multiline={multiline}
+        numberOfLines={numberOfLines}>
+        <TextInput
           placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
-          {...this.props} />
+          style={{
+            flex: inlineLabel ? .5 : 1,
+            color: theme.Input.color,
+            fontSize: theme.BaseInput.fontSize,
+            lineHeight: theme.BaseInput.lineHeight,
+            textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
+          }}
+          {...rest} />
       </InputWrapper>
     )
   }
