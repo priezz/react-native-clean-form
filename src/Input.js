@@ -22,31 +22,39 @@ const calculateFlexValue = ({ inlineLabel, multiline, numberOfLines }) => inline
  * @param {Object} props
  * @returns {string}
  */
-const determineTextAlignment = ({ multiline, numberOfLines }) => {
-  let orientation = 'center'
-  if (multiline && numberOfLines > 1) orientation = 'top'
-
-  return (orientation)
-}
+const determineTextAlignment = ({ multiline, numberOfLines }) => multiline && numberOfLines > 1
+  ? 'top'
+  : 'center'
 
 class Input extends React.Component {
   render() {
     const { inlineLabel = true, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
     console.log('[Input/render]', this.props)
-    return <TextInput
-      allowFontScaling
-      multiline={numberOfLines > 1}
-      numberOfLines={numberOfLines}
-      placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
+    return <View
       style={{
-        height: (theme.Input.lineHeight || theme.BaseInput.lineHeight) * (Platform.OS == 'android' ? 2.2 : 1.1),
+        borderBottomWidth: 1,
+        borderBottomColor: theme.Input.underlineColor || theme.BaseInput.underlineColor || 'transparent',
         flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
-        textAlignVertical: determineTextAlignment({ multiline, numberOfLines }),
-        ...theme.BaseInput,
-        ...theme.Input,
+        // height: (theme.Input.lineHeight || theme.BaseInput.lineHeight) * (Platform.OS == 'android' ? 2.2 : 1.1),
+        justifyContent: 'center',
+        overflow: 'visible',
       }}
-      {...rest}
-    />
+    >
+      <TextInput
+        allowFontScaling
+        multiline={numberOfLines > 1}
+        numberOfLines={numberOfLines}
+        placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
+        style={{
+          // flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
+          height: (theme.Input.lineHeight || theme.BaseInput.lineHeight) * (Platform.OS == 'android' ? 2.2 : 1.1),
+          textAlignVertical: determineTextAlignment({ multiline, numberOfLines }),
+          ...theme.BaseInput,
+          ...theme.Input,
+        }}
+        {...rest}
+      />
+    </View>
   }
 }
 
