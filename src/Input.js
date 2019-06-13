@@ -52,7 +52,8 @@ class Input extends React.Component {
           ...theme.BaseInput,
           ...theme.Input,
         }}
-        underlineColorAndroid="transparent"
+        /// Setting 'underlineColorAndroid' causes the Android bug!
+        /// https://github.com/facebook/react-native/issues/17530
         {...rest}
       />
     </View>

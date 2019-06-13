@@ -1,6 +1,6 @@
 {
   "name": "react-native-clean-form",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Redux-Form components for React Native",
   "main": "index.js",
   "directories": {
