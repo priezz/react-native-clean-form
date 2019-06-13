@@ -38,12 +38,12 @@ class Input extends React.Component {
       numberOfLines={numberOfLines}
       placeholderTextColor={this.props.theme.BaseInput.placeholderColor}
       style={{
-        color: theme.Input.color,
+        // height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+        height: (theme.Input.lineHeight || theme.BaseInput.lineHeight) * 1.1,
         flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
-        fontSize: theme.BaseInput.fontSize,
-        height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
-        lineHeight: theme.BaseInput.lineHeight,
         textAlignVertical: determineTextAlignment({ multiline, numberOfLines }),
+        ...theme.BaseInput,
+        ...theme.Input,
       }}
       {...rest}
     />
