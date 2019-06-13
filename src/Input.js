@@ -31,25 +31,17 @@ const determineTextOrientation = ({ multiline, numberOfLines }) => {
   return (orientation)
 }
 
-// When doing stacked labels we want the input to be greedy
-const InputWrapper = ({ children, inlineLabel, multiline, numberOfLines, }) => <View style={{
-  flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
-  justifyContent: 'center',
-}}>{children}</View>
-
-InputWrapper.defaultProps = {
-  theme: defaultTheme
-}
-
 class Input extends React.Component {
   render() {
     const { inlineLabel, multiline, numberOfLines, theme = defaultTheme, ...rest } = this.props
 
     return (
-      <InputWrapper
-        inlineLabel={inlineLabel}
-        multiline={multiline}
-        numberOfLines={numberOfLines}
+      <View
+        style={{
+          flex: calculateFlexValue({ inlineLabel, multiline, numberOfLines }),
+          height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
+          justifyContent: 'center',
+        }}
       >
         <TextInput
           allowFontScaling
@@ -59,13 +51,12 @@ class Input extends React.Component {
             color: theme.Input.color,
             flex: inlineLabel ? .5 : 1,
             fontSize: theme.BaseInput.fontSize,
-            height: Platform.OS == 'android' ? theme.BaseInput.lineHeight * 2 : theme.BaseInput.lineHeight,
             lineHeight: theme.BaseInput.lineHeight,
             textAlignVertical: determineTextOrientation({ multiline, numberOfLines }),
           }}
           {...rest}
         />
-      </InputWrapper>
+      </View>
     )
   }
 }
